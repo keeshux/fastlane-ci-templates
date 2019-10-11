@@ -9,7 +9,7 @@
 
 - Copy `templates/.env*` to root
 - Rename `.env.template.secret*` to `.env.secret*`
-- Edit secrets accordingly
+- Edit files accordingly
 - Make sure to add `.env.secret*` to `.gitignore`
 
 ## Usage

@@ -1,3 +1,3 @@
 #!/bin/sh
-PLATFORM="ios"
+. .env
 TARGET="beta" bundle exec fastlane --env secret-codesign,beta-archive $PLATFORM create_archive

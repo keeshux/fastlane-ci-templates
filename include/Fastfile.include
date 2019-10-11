@@ -1,0 +1,108 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+build_description_path = "../templates/DESCRIPTION.md" # "../#{ENV["BUILD_DESCRIPTION_PATH"]}"
+build_changelog_path = "../templates/CHANGELOG.md" # "../#{ENV["BUILD_CHANGELOG_PATH"]}"
+beta_feedback_path = "../templates/beta-feedback.txt"
+
+desc "Prepare a new build"
+lane :prepare_archive do
+    ensure_git_status_clean
+    cocoapods
+    get_build_number
+    base_build_number = lane_context[SharedValues::BUILD_NUMBER].to_i
+    increment_build_number(
+        build_number: base_build_number + number_of_commits
+    )
+end
+
+desc "Set build changelog"
+lane :set_build_changelog do
+    lane_context[SharedValues::FL_CHANGELOG] = File.read(build_changelog_path)
+end
+
+platform :ios do
+    desc "Archive a new build"
+    lane :create_archive do
+        prepare_archive
+        match
+        gym
+    end
+
+    desc "Submit a build to App Center"
+    lane :dev_deploy do
+        set_build_changelog
+        appcenter_upload
+    end
+
+    desc "Submit a build to TestFlight"
+    lane :beta_deploy do
+        set_build_changelog
+        pilot(
+            beta_app_description: File.read(build_description_path),
+            beta_app_feedback_email: File.read(beta_feedback_path)
+        )
+    end
+
+    desc "Update App Store metadata"
+    lane :update_metadata do
+        deliver(
+            skip_screenshots: true
+        )
+    end
+
+    desc "Update App Store screenshots"
+    lane :update_screenshots do
+        deliver(
+            skip_metadata: true
+        )
+    end
+
+    desc "Update provisioning profiles"
+    lane :update_provisioning do |options|
+        match(options)
+    end
+end
+
+platform :mac do
+    desc "Archive a new build"
+    lane :create_archive do
+        prepare_archive
+        gym
+    end
+
+    desc "Submit a build to App Center"
+    lane :dev_deploy do
+        set_build_changelog
+        notarize
+        appcenter_upload
+    end
+
+    desc "Update App Store metadata"
+    lane :update_metadata do
+        deliver(
+            platform: "osx",
+            skip_screenshots: true
+        )
+    end
+
+    desc "Update App Store screenshots"
+    lane :update_screenshots do
+        deliver(
+            platform: "osx",
+            skip_metadata: true
+        )
+    end
+end

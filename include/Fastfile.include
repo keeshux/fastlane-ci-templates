@@ -86,7 +86,7 @@ platform :mac do
     desc "Submit a build to App Center"
     lane :dev_deploy do
         set_build_changelog
-        notarize
+        #notarize
         appcenter_upload
     end
 

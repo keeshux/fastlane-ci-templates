@@ -72,6 +72,7 @@ platform :ios do
 
     desc "Update provisioning profiles"
     lane :update_provisioning do |options|
+        options[:force_for_new_devices] = true
         match(options)
     end
 end

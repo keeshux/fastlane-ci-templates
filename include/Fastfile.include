@@ -50,7 +50,7 @@ platform :ios do
     lane :create_archive do
         prepare_archive
         match
-        gym
+        build_ios_app
     end
 
     desc "Submit a build to App Center"
@@ -94,7 +94,10 @@ platform :mac do
     desc "Archive a new build"
     lane :create_archive do
         prepare_archive
-        gym
+        match(
+            platform: "macos"
+        )
+        build_mac_app
     end
 
     desc "Submit a build to App Center"
@@ -118,5 +121,12 @@ platform :mac do
             platform: "osx",
             skip_metadata: true
         )
+    end
+
+    desc "Update provisioning profiles"
+    lane :update_provisioning do |options|
+        options[:platform] = "macos"
+        options[:force_for_new_devices] = true
+        match(options)
     end
 end

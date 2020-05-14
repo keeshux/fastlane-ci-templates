@@ -94,9 +94,7 @@ platform :mac do
     desc "Archive a new build"
     lane :create_archive do
         prepare_archive
-        match(
-            platform: "macos"
-        )
+        match
         build_mac_app
     end
 
@@ -125,7 +123,6 @@ platform :mac do
 
     desc "Update provisioning profiles"
     lane :update_provisioning do |options|
-        options[:platform] = "macos"
         options[:force_for_new_devices] = true
         match(options)
     end

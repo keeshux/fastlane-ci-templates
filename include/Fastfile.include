@@ -47,9 +47,9 @@ end
 
 platform :ios do
     desc "Archive a new build"
-    lane :create_archive do
+    lane :create_archive do |options|
         prepare_archive
-        match
+        match unless options.include? :auto
         build_ios_app
     end
 
@@ -92,9 +92,9 @@ end
 
 platform :mac do
     desc "Archive a new build"
-    lane :create_archive do
+    lane :create_archive do |options|
         prepare_archive
-        match
+        match unless options.include? :auto
         build_mac_app
     end
 

@@ -1,2 +1,3 @@
 #!/bin/sh
-bundle exec fastlane --env secret-deploy update_screenshots
+. .env
+bundle exec fastlane --env secret-deploy $PLATFORM update_screenshots

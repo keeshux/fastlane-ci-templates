@@ -1,2 +1,3 @@
 #!/bin/sh
-bundle exec fastlane --env secret-deploy update_metadata
+. .env
+bundle exec fastlane --env secret-deploy $PLATFORM update_metadata

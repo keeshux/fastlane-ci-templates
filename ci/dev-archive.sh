@@ -1,3 +1,3 @@
 #!/bin/sh
-. .env
-TARGET="dev" bundle exec fastlane --env secret-codesign,dev-archive $PLATFORM create_archive $@
+PLATFORM=$1
+bundle exec fastlane --env dev,$PLATFORM,"dev.$PLATFORM",secret-codesign $PLATFORM create_archive "${@:2}"

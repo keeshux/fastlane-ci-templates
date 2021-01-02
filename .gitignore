@@ -6,5 +6,4 @@
 *.xcodeproj/project.xcworkspace
 *.xcodeproj/xcuserdata
 Pods
-fastlane
 .env.secret*

@@ -1,7 +1,9 @@
 #!/bin/sh
+. .env.$1
+
 METADATA="release_notes"
 RX='^[a-z]{2}(\-[A-z]+)?$'
-cd fastlane/metadata
+cd "$APP_ROOT/fastlane/metadata"
 for LANG in `ls -d *`; do
     if [[ $LANG == "en-US" ]]; then
         continue

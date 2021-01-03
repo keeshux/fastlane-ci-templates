@@ -1,5 +1,7 @@
 #!/bin/sh
-TARGET="CHANGELOG.md"
+. .env.$1
+
+TARGET="$APP_ROOT/CHANGELOG.md"
 RELEASES=(`grep -n "^## " $TARGET | sed -E "s/^([0-9]+).*$/\1/g"`)
 UNRELEASED=${RELEASES[0]}
 LATEST=${RELEASES[1]}

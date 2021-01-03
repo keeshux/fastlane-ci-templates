@@ -23,8 +23,8 @@
 
 ### Output
 
-- Intermediate products: `build/(dev|beta)`
-- IPA: `dist/(dev|beta)`
+- Intermediate products: `build/(ios|mac)/(dev|beta)`
+- IPA: `dist/(ios|mac)/(dev|beta)`
 
 ## Extra
 

@@ -1,3 +1,4 @@
 #!/bin/sh
-. .env
-bundle exec fastlane --env secret-codesign,secret-deploy $PLATFORM update_provisioning type:$1 readonly:false
+PLATFORM=$1
+CERT_TYPE=$2
+bundle exec fastlane --env $PLATFORM,secret-codesign,secret-deploy $PLATFORM update_provisioning type:$CERT_TYPE readonly:false

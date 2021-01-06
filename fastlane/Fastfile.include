@@ -45,6 +45,15 @@ lane :set_build_changelog do
     lane_context[SharedValues::FL_CHANGELOG] = File.read(build_changelog_path)
 end
 
+desc "Upload a build to the App Store"
+lane :store_deploy do
+    deliver(
+        skip_binary_upload: false,
+        skip_metadata: true,
+        skip_screenshots: true
+    )
+end
+
 desc "Update App Store metadata"
 lane :update_metadata do
     deliver(

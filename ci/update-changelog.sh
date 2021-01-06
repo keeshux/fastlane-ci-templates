@@ -16,6 +16,3 @@ cp templates/$CHANGELOG.tmp $APP_ROOT/$RELEASE_NOTES
 ci/copy-release-notes.sh $1
 cat templates/$CHANGELOG_PREFACE templates/$CHANGELOG.tmp >templates/$CHANGELOG
 rm templates/$CHANGELOG.tmp
-
-git add $APP_ROOT/$CHANGELOG $APP_ROOT/$FASTLANE_METADATA
-git commit -m "Set beta release ($APP_CONTEXT)"

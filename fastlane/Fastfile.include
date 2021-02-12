@@ -14,7 +14,7 @@
 # update_fastlane
 
 build_description_path = "../templates/DESCRIPTION.md" # "../#{ENV["BUILD_DESCRIPTION_PATH"]}"
-build_changelog_path = "../templates/CHANGELOG.md" # "../#{ENV["BUILD_CHANGELOG_PATH"]}"
+build_changelog_path = "../templates/CHANGELOG.#{ENV["PLATFORM"]}.md" # "../#{ENV["BUILD_CHANGELOG_PATH"]}"
 beta_feedback_path = "../templates/beta-feedback.txt"
 beta_review_info_path = "../templates/beta-review-info.txt"
 

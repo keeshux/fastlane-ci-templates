@@ -47,6 +47,7 @@ end
 
 desc "Upload a build to the App Store"
 lane :store_deploy do
+    app_store_connect_api_key
     deliver(
         skip_binary_upload: false,
         skip_metadata: true,
@@ -56,6 +57,7 @@ end
 
 desc "Update App Store metadata"
 lane :update_metadata do
+    app_store_connect_api_key
     deliver(
         skip_screenshots: true
     )
@@ -63,6 +65,7 @@ end
 
 desc "Update App Store screenshots"
 lane :update_screenshots do
+    app_store_connect_api_key
     deliver(
         skip_metadata: true
     )
@@ -71,6 +74,7 @@ end
 desc "Update provisioning profiles"
 lane :update_provisioning do |options|
     options[:force_for_new_devices] = true
+    app_store_connect_api_key
     match(options)
 end
 
@@ -78,6 +82,7 @@ platform :ios do
     desc "Archive a new build"
     lane :create_archive do |options|
         prepare_archive
+        app_store_connect_api_key
         match unless options.include? :auto
         build_ios_app
     end
@@ -91,6 +96,7 @@ platform :ios do
     desc "Submit a build to TestFlight"
     lane :beta_deploy do
         set_build_changelog
+        app_store_connect_api_key
         pilot(
             beta_app_description: File.read(build_description_path),
             beta_app_feedback_email: File.read(beta_feedback_path),
@@ -103,6 +109,7 @@ platform :mac do
     desc "Archive a new build"
     lane :create_archive do |options|
         prepare_archive
+        app_store_connect_api_key
         match unless options.include? :auto
         build_mac_app
     end

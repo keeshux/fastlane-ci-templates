@@ -12,8 +12,3 @@ RELEASE_NOTES="$FASTLANE_METADATA/en-US/release_notes.txt"
 
 sed "s/Unreleased/$VERSION Beta $BUILD ($DATE)/" $APP_ROOT/$CHANGELOG >$CHANGELOG.tmp
 mv $CHANGELOG.tmp $APP_ROOT/$CHANGELOG
-ci/latest-changelog.sh $1 | ci/strip-issues.sh >templates/$CHANGELOG.tmp
-cp templates/$CHANGELOG.tmp $APP_ROOT/$RELEASE_NOTES
-ci/copy-release-notes.sh $1
-cat templates/$CHANGELOG_PREFACE templates/$CHANGELOG.tmp >templates/$CHANGELOG_PLATFORM
-rm templates/$CHANGELOG.tmp

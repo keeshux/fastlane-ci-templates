@@ -42,6 +42,13 @@ lane :set_build_changelog do
     lane_context[SharedValues::FL_CHANGELOG] = File.read(build_changelog_path)
 end
 
+desc "Submit a build to TestFlight"
+lane :beta_deploy do
+    set_build_changelog
+    app_store_connect_api_key
+    pilot
+end
+
 desc "Upload a build to the App Store"
 lane :store_deploy do
     app_store_connect_api_key
@@ -88,13 +95,6 @@ platform :ios do
     lane :dev_deploy do
         set_build_changelog
         appcenter_upload
-    end
-
-    desc "Submit a build to TestFlight"
-    lane :beta_deploy do
-        set_build_changelog
-        app_store_connect_api_key
-        pilot
     end
 end
 

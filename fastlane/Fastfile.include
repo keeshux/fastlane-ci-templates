@@ -36,20 +36,13 @@ end
 
 ## Deploy
 
-desc "Set build changelog"
-lane :set_build_changelog do |options|
-    lane_context[SharedValues::FL_CHANGELOG] = options[:changelog]
-end
-
 desc "Submit a build to App Center"
 lane :dev_deploy do
-    set_build_changelog
     appcenter_upload
 end
 
 desc "Submit a build to TestFlight"
 lane :beta_deploy do
-    set_build_changelog
     app_store_connect_api_key
     pilot
 end

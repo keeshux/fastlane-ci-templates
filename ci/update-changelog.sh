@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . .env.$1
 
 VERSION=`ci/version-number.sh`

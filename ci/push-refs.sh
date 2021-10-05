@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 git push && git push github
 git push --tags && git push --tags github
 git checkout stable && git merge master

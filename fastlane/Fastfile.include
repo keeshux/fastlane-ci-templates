@@ -57,6 +57,17 @@ lane :store_deploy do
     )
 end
 
+desc "Submit a build to App Review"
+lane :store_review do
+    app_store_connect_api_key
+    deliver(
+        submit_for_review: true,
+        skip_binary_upload: true,
+        skip_metadata: false,
+        skip_screenshots: true
+    )
+end
+
 ## Meta
 
 desc "Update App Store metadata"

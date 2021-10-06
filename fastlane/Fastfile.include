@@ -15,14 +15,18 @@
 
 ## Build
 
+desc "Get commit-based build number"
+lane :get_commits_build_number do
+    get_build_number
+    lane_context[SharedValues::BUILD_NUMBER].to_i + number_of_commits
+end
+
 desc "Prepare a new build"
 lane :prepare_archive do
     ensure_git_status_clean
     cocoapods
-    get_build_number
-    base_build_number = lane_context[SharedValues::BUILD_NUMBER].to_i
     increment_build_number(
-        build_number: base_build_number + number_of_commits
+        build_number: get_commits_build_number
     )
 end
 
@@ -45,7 +49,9 @@ end
 desc "Submit a build to TestFlight"
 lane :beta_deploy do
     app_store_connect_api_key
-    pilot
+    pilot(
+        build_number: get_commits_build_number.to_s
+    )
 end
 
 desc "Upload a build to the App Store"
@@ -62,6 +68,7 @@ desc "Submit a build to App Review"
 lane :store_review do
     app_store_connect_api_key
     deliver(
+        build_number: get_commits_build_number.to_s,
         submit_for_review: true,
         skip_binary_upload: true,
         skip_metadata: false,

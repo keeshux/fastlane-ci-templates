@@ -13,7 +13,7 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-## Build
+## Packaging
 
 desc "Get commit-based build number"
 lane :get_commits_build_number do
@@ -39,28 +39,23 @@ lane :create_archive do
     reset_git_repo
 end
 
-## Deploy
-
-desc "Submit a build to App Center"
-lane :dev_deploy do
-    appcenter_upload
-end
-
-desc "Submit a build to TestFlight"
-lane :beta_deploy do
-    app_store_connect_api_key
-    pilot(
-        build_number: get_commits_build_number.to_s
-    )
-end
+## Distribution
 
 desc "Upload a build to the App Store"
-lane :store_deploy do
+lane :store_upload do
     app_store_connect_api_key
     deliver(
         skip_binary_upload: false,
         skip_metadata: true,
         skip_screenshots: true
+    )
+end
+
+desc "Submit a build to TestFlight"
+lane :store_beta do
+    app_store_connect_api_key
+    pilot(
+        build_number: get_commits_build_number.to_s
     )
 end
 
@@ -74,6 +69,11 @@ lane :store_review do
         skip_metadata: false,
         skip_screenshots: true
     )
+end
+
+desc "Submit a build to App Center"
+lane :dev_deploy do
+    appcenter_upload
 end
 
 ## Meta

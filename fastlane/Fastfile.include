@@ -36,7 +36,9 @@ lane :create_archive do
     app_store_connect_api_key
     match
     gym
-    reset_git_repo
+    reset_git_repo(
+        skip_clean: true
+    )
 end
 
 ## Distribution

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 . .env.$1
 
 TARGET="$APP_ROOT/CHANGELOG.md"

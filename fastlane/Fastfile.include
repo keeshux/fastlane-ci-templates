@@ -44,6 +44,7 @@ lane :get_commits_build_number do
     ).to_i
     num += number_of_commits
     UI.message("Build: #{num}")
+    num
 end
 
 ## Packaging

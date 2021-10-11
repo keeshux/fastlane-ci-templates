@@ -41,6 +41,14 @@ lane :create_archive do
     )
 end
 
+desc "Test a target scheme"
+lane :test_target do
+    cocoapods
+    app_store_connect_api_key
+    match
+    scan
+end
+
 ## Distribution
 
 desc "Upload a build to the App Store"

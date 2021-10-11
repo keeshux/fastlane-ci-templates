@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 . .env.$1
 
 METADATA="release_notes"

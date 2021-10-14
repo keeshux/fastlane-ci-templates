@@ -61,7 +61,6 @@ end
 desc "Archive a new build"
 lane :create_archive do
     prepare_archive
-    app_store_connect_api_key
     match
     gym
     reset_git_repo(
@@ -72,7 +71,6 @@ end
 desc "Test a target scheme"
 lane :test_target do
     cocoapods
-    app_store_connect_api_key
     match
     scan
 end
@@ -81,7 +79,6 @@ end
 
 desc "Upload a build to the App Store"
 lane :store_upload do
-    app_store_connect_api_key
     deliver(
         skip_binary_upload: false,
         skip_metadata: true,
@@ -91,13 +88,11 @@ end
 
 desc "Submit a build to TestFlight"
 lane :store_beta do
-    app_store_connect_api_key
     pilot
 end
 
 desc "Submit a build to App Review"
 lane :store_review do |options|
-    app_store_connect_api_key
     deliver(
         submit_for_review: true,
         submission_information: options,
@@ -116,7 +111,6 @@ end
 
 desc "Update App Store metadata"
 lane :update_metadata do
-    app_store_connect_api_key
     deliver(
         skip_screenshots: true
     )
@@ -124,7 +118,6 @@ end
 
 desc "Update App Store screenshots"
 lane :update_screenshots do
-    app_store_connect_api_key
     deliver(
         skip_metadata: true
     )
@@ -133,6 +126,5 @@ end
 desc "Update provisioning profiles"
 lane :update_provisioning do |options|
     options[:force_for_new_devices] = true
-    app_store_connect_api_key
     match(options)
 end

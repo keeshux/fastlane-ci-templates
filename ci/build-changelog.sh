@@ -3,5 +3,8 @@
 . .env.$1
 
 RELEASE_NOTES="$APP_ROOT/fastlane/metadata/en-US/release_notes.txt"
-echo $CHANGELOG_PREFACE
+if [[ -n $CHANGELOG_PREFACE ]]; then
+    echo "$CHANGELOG_PREFACE"
+    echo
+fi
 cat $RELEASE_NOTES

@@ -50,17 +50,19 @@ end
 ## Packaging
 
 desc "Prepare a new build"
-lane :prepare_archive do
+lane :prepare_archive do |options|
     ensure_git_status_clean
-    cocoapods
+    if options[:cocoapods]
+        cocoapods
+    end
     increment_build_number(
         build_number: get_commits_build_number
     )
 end
 
 desc "Archive a new build"
-lane :create_archive do
-    prepare_archive
+lane :create_archive do |options|
+    prepare_archive(options)
     match
     gym
     reset_git_repo(
@@ -69,8 +71,10 @@ lane :create_archive do
 end
 
 desc "Test a target scheme"
-lane :test_target do
-    cocoapods
+lane :test_target do |options|
+    if options[:cocoapods]
+        cocoapods
+    end
     match
     scan
 end

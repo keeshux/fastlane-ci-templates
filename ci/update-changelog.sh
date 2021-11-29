@@ -2,7 +2,7 @@
 . .env.$1
 
 VERSION=`ci/version-number.sh $1`
-BUILD=$((`ci/build-number.sh $1` + 1))
+BUILD=`ci/build-number.sh $1`
 DATE=`date "+%Y-%m-%d"`
 CHANGELOG="CHANGELOG.md"
 CHANGELOG_PLATFORM="CHANGELOG.$1.md"

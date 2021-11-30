@@ -49,32 +49,26 @@ end
 
 ## Packaging
 
-desc "Archive a new build"
-lane :create_archive do |options|
+desc "Test and optionally build an app"
+lane :test_and_build_app do |options|
     ensure_git_status_clean
     if options[:cocoapods]
         cocoapods
     end
     match
-    gym
+    scan
+    if options[:build]
+        gym
+    end
     reset_git_repo(
         skip_clean: true
     )
 end
 
-desc "Test a target scheme"
-lane :test_target do |options|
-    if options[:cocoapods]
-        cocoapods
-    end
-    match
-    scan
-end
-
 ## Distribution
 
 desc "Upload a build to the App Store"
-lane :store_upload do
+lane :deliver_upload do
     deliver(
         skip_binary_upload: false,
         skip_metadata: true,
@@ -82,13 +76,8 @@ lane :store_upload do
     )
 end
 
-desc "Submit a build to TestFlight"
-lane :store_beta do
-    pilot
-end
-
 desc "Submit a build to App Review"
-lane :store_review do |options|
+lane :deliver_review do |options|
     deliver(
         submit_for_review: true,
         submission_information: options,
@@ -99,29 +88,18 @@ lane :store_review do |options|
     )
 end
 
-desc "Submit a build to App Center"
-lane :dev_deploy do
-    appcenter_upload
-end
-
-## App Store metadata
-
 desc "Update App Store metadata"
-lane :update_metadata do
+lane :deliver_metadata do
     deliver(
+        skip_metadata: false,
         skip_screenshots: true
     )
 end
 
 desc "Update App Store screenshots"
-lane :update_screenshots do
+lane :deliver_screenshots do
     deliver(
-        skip_metadata: true
+        skip_metadata: true,
+        skip_screenshots: false
     )
-end
-
-desc "Update provisioning profiles"
-lane :update_provisioning do |options|
-    options[:force_for_new_devices] = true
-    match(options)
 end

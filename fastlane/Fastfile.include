@@ -49,15 +49,17 @@ end
 
 ## Packaging
 
-desc "Test and optionally build an app"
+desc "Test and build an app"
 lane :test_and_build_app do |options|
     ensure_git_status_clean
     if options[:cocoapods]
         cocoapods
     end
     match
-    scan
-    if options[:build]
+    if options.fetch(:test, true)
+        scan
+    end
+    if options.fetch(:build, true)
         gym
     end
     reset_git_repo(

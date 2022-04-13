@@ -64,9 +64,11 @@ lane :test_and_build_app do |options|
     if options.fetch(:build, true)
         gym
     end
-    reset_git_repo(
-        skip_clean: true
-    )
+    if options.fetch(:ensure_clean, true)
+        reset_git_repo(
+            skip_clean: true
+        )
+    end
 end
 
 ## Distribution

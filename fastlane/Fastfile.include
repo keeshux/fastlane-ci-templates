@@ -51,7 +51,9 @@ end
 
 desc "Test and build an app"
 lane :test_and_build_app do |options|
-    ensure_git_status_clean
+    if options.fetch(:ensure_clean, true)
+        ensure_git_status_clean
+    end
     if options[:cocoapods]
         cocoapods
     end

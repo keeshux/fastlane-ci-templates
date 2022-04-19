@@ -3,7 +3,7 @@
 
 METADATA="release_notes"
 RX='^[a-z]{2}(\-[A-z]+)?$'
-cd "$APP_ROOT/fastlane/metadata"
+cd "$FASTLANE_ROOT/fastlane/metadata"
 for LANG in `ls -d *`; do
     if [[ $LANG == "en-US" ]]; then
         continue

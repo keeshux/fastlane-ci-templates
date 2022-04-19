@@ -1,14 +1,14 @@
 #!/bin/bash
 . .env.$1
 
-TARGET="$APP_ROOT/CHANGELOG.md"
-RELEASES=(`grep -n "^## " $TARGET | sed -E "s/^([0-9]+).*$/\1/g"`)
+CHANGELOG="CHANGELOG.md"
+RELEASES=(`grep -n "^## " $CHANGELOG | sed -E "s/^([0-9]+).*$/\1/g"`)
 UNRELEASED=${RELEASES[0]}
 LATEST=${RELEASES[1]}
 
 if [ ! $LATEST ]; then
-    LATEST=`cat $TARGET | wc -l`
-    cat $TARGET | tail -n $((LATEST - UNRELEASED - 1))
+    LATEST=`cat $CHANGELOG | wc -l`
+    cat $CHANGELOG | tail -n $((LATEST - UNRELEASED - 1))
     exit
 fi
-cat $TARGET | head -n $((LATEST - 1)) | tail -n $((LATEST - UNRELEASED - 2))
+cat $CHANGELOG | head -n $((LATEST - 1)) | tail -n $((LATEST - UNRELEASED - 2))
